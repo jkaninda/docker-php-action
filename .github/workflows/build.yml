@@ -22,10 +22,13 @@ jobs:
         run: |
           set -x
           if [[ ${{ inputs.docker_tag }} == 'latest' ]]; then
-            echo "TAG_NAME=8.1" >> "$GITHUB_ENV"
+            echo "TAG_NAME=latest" >> "$GITHUB_ENV"
+            echo "FILE=./docker/8.1/Dockerfile" >> "$GITHUB_ENV"
+
             echo "Build latest tag'"
           else
             echo "TAG_NAME=${{ inputs.docker_tag }}" >> "$GITHUB_ENV"
+            echo "FILE=./docker/${{env.TAG_NAME}}/Dockerfile" >> "$GITHUB_ENV"
             echo "Build from tag folder'"
 
           fi
@@ -46,6 +49,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: ./
-          file: ./docker/${{env.TAG_NAME}}/Dockerfile
+          file: ${{env.FILE}}
           push: true
           tags: "${{env.BUILDKIT_IMAGE}}:${{env.TAG_NAME}}"
