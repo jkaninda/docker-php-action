@@ -11,7 +11,7 @@ on:
         type: string
 
 env:
-  #BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
+  TAG_NAME: latest
   BUILDKIT_IMAGE: jkaninda/laravel-php-fpm
 jobs:
   docker:
