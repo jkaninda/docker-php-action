@@ -1,0 +1,49 @@
+name: Docker build
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      docker_tag:
+        description: 'Docker tag'
+        required: true
+        default: 'latest' 
+        type: string
+
+env:
+  #BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
+  BUILDKIT_IMAGE: jkaninda/laravel-php-fpm
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - 
+        name: Set environment for branch
+        run: |
+          set -x
+          if [[ ${{ inputs.docker_tag }} == 'latest' ]]; then
+            TAG_NAME=8.1
+            echo "Build latest tag'"
+          else
+            TAG_NAME=${{ inputs.docker_tag }}
+          fi
+      - 
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - 
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - 
+        name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: ./
+          file: "./docker/${{TAG_NAME}}/Dockerfile"
+          push: true
+          tags: "${{env.BUILDKIT_IMAGE}}:${{env.TAG_NAME}}"
