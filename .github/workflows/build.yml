@@ -26,27 +26,27 @@ jobs:
         name: Build and push 7.4
         uses: docker/build-push-action@v3
         with:
-          file: "./docker/amd64/7.4/Dockerfile"
+          file: "./docker/7.4/Dockerfile"
           push: true
           tags: "${{env.BUILDKIT_IMAGE}}:7.4"
       -
         name: Build and push 8.0
         uses: docker/build-push-action@v3
         with:
-          file: "./docker/amd64/8.0/Dockerfile"
+          file: "./docker/8.0/Dockerfile"
           push: true
           tags: "${{env.BUILDKIT_IMAGE}}:8.1"
       -
         name: Build and push 8.1
         uses: docker/build-push-action@v3
         with:
-          file: "./docker/amd64/8.1/Dockerfile"
+          file: "./docker/8.1/Dockerfile"
           push: true
           tags: "${{env.BUILDKIT_IMAGE}}:8.1"
       -
         name: Build and push 8.2
         uses: docker/build-push-action@v3
         with:
-          file: "./docker/amd64/8.2/Dockerfile"
+          file: "./docker/8.2/Dockerfile"
           push: true
           tags: "${{env.BUILDKIT_IMAGE}}:8.2"
