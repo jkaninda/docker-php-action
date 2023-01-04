@@ -15,7 +15,7 @@ services:
      container_name: nginx-server
      restart: unless-stopped
      ports:
-      - 80:80
+      - 89:80
      volumes:
       - ./laravel:/var/www/html
      environment:
