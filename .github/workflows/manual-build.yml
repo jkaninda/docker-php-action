@@ -1,13 +1,19 @@
-name: amd64-build
+name: Build arm
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
 on:
-  push:
-    branches:
-      - '**'
-  pull_request:
-    types:
-      - closed
-    branches:
-      - '**'
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      docker_tag:
+        description: 'Docker build tag'
+        required: true
+        default: 'latest' 
+        type: string
 
 env:
   BUILDKIT_IMAGE: jkaninda/laravel-php-fpm
@@ -32,6 +38,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           #context: .
-          file: "./docker/amd64/8.1/Dockerfile"
+          file: "./docker/8.1/Dockerfile"
           push: true
           tags: "${{env.BUILDKIT_IMAGE}}:8.1-test"
