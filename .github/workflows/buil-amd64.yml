@@ -32,6 +32,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: ./docker/amd64/8.1/Dockerfile
+          file: "{context}/docker/amd64/8.1/Dockerfile"
           push: true
           tags: "${{env.BUILDKIT_IMAGE}}:8.1-test"
